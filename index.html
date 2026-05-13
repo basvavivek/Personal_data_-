@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municipal Commission</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 12px 0 4px;
+            font-weight: bold;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .note {
+            font-size: 0.95rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Municipal Commission</h1>
+    <p>The Municipal Commission is responsible for managing the affairs of the municipality.</p>
+
+    <h2>Send a Report via WhatsApp</h2>
+    <p class="note">Fill in the details below and click the button to send the report message via WhatsApp.</p>
+
+    <form id="reportForm">
+        <label for="topic">Topic</label>
+        <input type="text" id="topic" name="topic" placeholder="e.g. Road damage, Water supply" required>
+
+        <label for="problem">Problem</label>
+        <textarea id="problem" name="problem" placeholder="Describe the problem clearly" required></textarea>
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="e.g. Block 12, Main Street" required>
+
+        <button type="submit">Send Report on WhatsApp</button>
+    </form>
+
+    <p class="note">This page prepares the message and opens WhatsApp so your report can be sent to the Municipal Commission.</p>
+
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var topic = document.getElementById('topic').value.trim();
+            var problem = document.getElementById('problem').value.trim();
+            var location = document.getElementById('location').value.trim();
+
+            if (!topic || !problem || !location) {
+                alert('Please fill in topic, problem, and location.');
+                return;
+            }
+
+            var phoneNumber = '9573090308';
+            var message = 'Municipal Commission Report:%0A';
+            message += 'Topic: ' + encodeURIComponent(topic) + '%0A';
+            message += 'Problem: ' + encodeURIComponent(problem) + '%0A';
+            message += 'Location: ' + encodeURIComponent(location) + '%0A';
+            message += '%0AThank you.';
+
+            var whatsappUrl = 'https://api.whatsapp.com/send?phone=' + phoneNumber + '&text=' + message;
+
+            window.open(whatsappUrl, '_blank');
+        });
+    </script>
+</body>
+</html>
